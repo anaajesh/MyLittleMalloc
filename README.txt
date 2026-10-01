@@ -1,2 +1,2 @@
 # MyLittleMalloc
-AUTHORS: Anagha Ajesh() and Manusri Yarramsetty(my607)
+AUTHORS: Anagha Ajesh(aa3611) and Manusri Yarramsetty(my607)
