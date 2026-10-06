@@ -41,7 +41,9 @@ static void leak_checker(void){
     }
 
     if(leaked_objects > 0){
-        printf("LEAKED %d OBJECTS FOR A TOTAL OF %d BYTES\n", leaked_objects, leaked_bytes);
+        //printf("LEAKED %d OBJECTS FOR A TOTAL OF %d BYTES\n", leaked_objects, leaked_bytes);
+        printf("mymalloc: %d bytes leaked in %d objects.\n", leaked_objects, leaked_bytes);
+
     }
 }
 
@@ -100,7 +102,7 @@ void myfree(void *ptr, char *file, int line){
     }
 
     if(!initialized){
-        fprintf(stderr, "free: invalid pointer (%s:%d)\n", file, line);
+        fprintf(stderr, "free: Innapropriate pointer (%s:%d)\n", file, line);
         exit(2);
     }
 
@@ -119,7 +121,7 @@ void myfree(void *ptr, char *file, int line){
 
     //pointer wrong -> error
     if(p >= heap.bytes + MEMLENGTH){
-        fprintf(stderr, "free: invalid pointer (%s:%d)\n", file, line);
+        fprintf(stderr, "free: Inappropriate pointer (%s:%d)\n", file, line);
         exit(2);
     }
 
