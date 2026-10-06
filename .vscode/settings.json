@@ -1,4 +1,4 @@
 {
     "C_Cpp.errorSquiggles": "enabled",
-    "C_Cpp.default.compilerPath": "c:\\Users\\anagh\\.vscode\\Systems Programming\\MyLittleMalloc\\mymalloc.h"
+    "C_Cpp.default.compilerPath": "C:/msys64/ucrt64/bin/gcc.exe"
 }

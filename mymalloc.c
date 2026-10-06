@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <mymalloc.h>
+#include "mymalloc.h"
 
 #define MEMLENGTH 4096 
 #define ALIGNMENT 8 //@anagha pls check ts --> i remember it being 8 and not 16 but i could be wrong
@@ -56,6 +56,7 @@ static void initialize_heap(void){
 
 //MALLOC SHIT HERE
 void *mymalloc (size_t size, char *file, int line){
+
     if (size == 0){
         return NULL; 
     }
@@ -91,4 +92,70 @@ void *mymalloc (size_t size, char *file, int line){
     //@anagha pls check if this is the right format of the error message i think it is but idk
 }
 
+void myfree(void *ptr, char *file, int line){
 
+    if(ptr == NULL){
+        return;
+    }
+
+    if(!initialized){
+        fprintf(stderr, "free: invalid pointer (%s:%d)\n", file, line);
+        exit(2);
+    }
+
+    char *p = heap.bytes;
+    ChunkHeader *current = NULL;
+
+    while(p < heap.bytes + MEMLENGTH){
+
+        current = (ChunkHeader *)p;
+
+        if((void *)(p + sizeof(ChunkHeader)) == ptr){
+            break;
+        }
+
+        p = p + current->size;
+    }
+
+    //pointer wrong -> error
+    if(p >= heap.bytes + MEMLENGTH){
+        fprintf(stderr, "free: invalid pointer (%s:%d)\n", file, line);
+        exit(2);
+    }
+
+    if(current->allocated == 0){
+        fprintf(stderr, "free: double free detected (%s:%d)\n", file, line); //alr free -> error
+        exit(2);
+    }
+
+    current->allocated = 0;
+
+    //chunk after
+    char *next = p + current->size;
+
+    if(next < heap.bytes + MEMLENGTH){
+
+        ChunkHeader *next_chunk = (ChunkHeader *)next;
+
+        if(next_chunk->allocated == 0){
+            current->size = current->size + next_chunk->size;
+        }
+    }
+
+    //chunk before
+    char *before = heap.bytes;
+    ChunkHeader *before_chunk = NULL;
+
+    while(before < p){
+
+        before_chunk = (ChunkHeader *)before;
+        before = before + before_chunk->size;
+    }
+
+
+    // combine with prev chunk if its free
+    if(before_chunk != NULL && before_chunk->allocated == 0){
+
+        before_chunk->size = before_chunk->size + current->size;
+    }
+}
