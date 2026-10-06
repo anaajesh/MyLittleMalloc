@@ -94,6 +94,7 @@ void *mymalloc (size_t size, char *file, int line){
 
 void myfree(void *ptr, char *file, int line){
 
+    //js checkin if pointer is null or not initialized for base checks
     if(ptr == NULL){
         return;
     }
