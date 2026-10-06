@@ -18,7 +18,33 @@ static union {
 static int initialized = 0; // 0 if the heap isnt set up and 1 otherwise; idk if we REALLY need this but its going to be a sticklet for debugging if we dont 
 
 
-//HELEPER METHODS HERE?
+//HELEPER METHODS HERE? 
+
+//@manu im gonna add the coalescing helper function here
+//i also got a test file for coalesce and js popped it into the directory under testcoa.c,
+//but we cant use the test file yet bc i didnt call coalesce in free() since mine is unfinished
+
+static void coalesce(void) {
+    char *ptr = heap.bytes;
+
+    while (ptr < heap.bytes + MEMLENGTH) {
+
+        ChunkHeader *current = (ChunkHeader *)ptr;
+        char *next_ptr = ptr + current->size;
+
+        if (next_ptr < heap.bytes + MEMLENGTH) {
+
+            ChunkHeader *next = (ChunkHeader *)next_ptr;
+
+            if (!current->allocated && !next->allocated) {
+                current->size += next->size;
+            }
+        }
+
+        ptr += current->size;
+    }
+}
+
 //we need a method to round up
 static size_t round_up(size_t size){
     return (size + 7) & ~((size_t)7); 
