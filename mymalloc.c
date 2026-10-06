@@ -107,7 +107,6 @@ void myfree(void *ptr, char *file, int line){
     ChunkHeader *current = NULL;
 
     while(p < heap.bytes + MEMLENGTH){
-
         current = (ChunkHeader *)p;
 
         if((void *)(p + sizeof(ChunkHeader)) == ptr){
@@ -140,6 +139,7 @@ void myfree(void *ptr, char *file, int line){
         if(next_chunk->allocated == 0){
             current->size = current->size + next_chunk->size;
         }
+
     }
 
     //chunk before
@@ -147,7 +147,6 @@ void myfree(void *ptr, char *file, int line){
     ChunkHeader *before_chunk = NULL;
 
     while(before < p){
-
         before_chunk = (ChunkHeader *)before;
         before = before + before_chunk->size;
     }
