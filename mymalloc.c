@@ -3,7 +3,7 @@
 #include <mymalloc.h>
 
 #define MEMLENGTH 4096 
-#define ALLIGNMENT 8 //@anagha pls check ts --> i remember it being 8 and not 16 but i could be wrong
+#define ALIGNMENT 8 //@anagha pls check ts --> i remember it being 8 and not 16 but i could be wrong
 
 typedef struct ChunkHeader {
     size_t size;
@@ -12,7 +12,7 @@ typedef struct ChunkHeader {
 
 static union {
     char bytes[MEMLENGTH];
-    int not_used; //@anagha idk if this should be int or double 
+    double not_used;  
 } heap; //instantiate the statiic union to create a heap of 4096 bytes
 
 static int initialized = 0; // 0 if the heap isnt set up and 1 otherwise; idk if we REALLY need this but its going to be a sticklet for debugging if we dont 
@@ -71,7 +71,7 @@ void *mymalloc (size_t size, char *file, int line){
     while (ptr < heap.bytes + MEMLENGTH){ 
         ChunkHeader *header = (ChunkHeader *)ptr;
         if(!header->allocated && header->size >= total_needed){ // hceacking if the chunk is free and big enough
-           if ( header -> size >= sizeof(ChunkHeader) + total_needed + ALLIGNMENT){
+           if ( header -> size >= sizeof(ChunkHeader) + total_needed + ALIGNMENT){
                 size_t leftover_size = header->size - total_needed;
                 header->size = total_needed;//splitting in two 
                 ChunkHeader *next_header = (ChunkHeader *)(ptr + total_needed);//leftobver piece starts right after the chunk I just shrunk 
@@ -81,6 +81,9 @@ void *mymalloc (size_t size, char *file, int line){
              header->allocated = 1;
              return (void *)(ptr + sizeof(ChunkHeader)); //returning the pointer to payload right after the header
         }
+
+        ptr += header->size;
+
     }
     //if no chunck was big enough to fit the request
     fprintf(stderr, "malloc: Unable to allocate %zu bytes (%s:%d)\n", size, file, line);
