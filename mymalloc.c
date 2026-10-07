@@ -25,6 +25,7 @@ static int initialized = 0; // 0 if the heap isnt set up and 1 otherwise; idk if
 //but we cant use the test file yet bc i didnt call coalesce in free() since mine is unfinished
 
 static void coalesce(void) {
+    
     char *ptr = heap.bytes;
 
     while (ptr < heap.bytes + MEMLENGTH) {
@@ -38,6 +39,7 @@ static void coalesce(void) {
 
             if (!current->allocated && !next->allocated) {
                 current->size += next->size;
+                continue;  
             }
         }
 
@@ -158,7 +160,9 @@ void myfree(void *ptr, char *file, int line){
 
     current->allocated = 0;
 
-    //chunk after
+    coalesce();
+
+    /*chunk after
     char *next = p + current->size;
 
     if(next < heap.bytes + MEMLENGTH){
@@ -186,4 +190,5 @@ void myfree(void *ptr, char *file, int line){
 
         before_chunk->size = before_chunk->size + current->size;
     }
+    */
 }
