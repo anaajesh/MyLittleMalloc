@@ -6,7 +6,7 @@
 #define OBJECTS 120
 
 /*
-Test 1: Make sure the allocations used in workload 1 do not overlap and that data written to each allocation stays unchanged.
+Test 1: Make sure the allocations used in workload 1 do not overlap and that data written to each allocation stays unchanged
  */
 void test_workload1(void) {
     int sizes[] = {8, 16, 32, 64, 128, 512, 1024};
@@ -45,7 +45,7 @@ void test_workload1(void) {
 
 
 /*
-Test 2: Allocate 120 small objects, write different values to each, then free them in allocation order.
+Test 2: Allocate 120 small objects, write different values to each, then free them in allocation order
  */
 void test_workload2(void) {
     void *ptrs[OBJECTS];
@@ -77,7 +77,8 @@ void test_workload2(void) {
 
 
 
-//Test 3: Reproduce the general allocation/free pattern from workload 3. Make sure allocated objects can still be accessed correctly.
+//Test 3: Reproduce the general allocation/free pattern from workload 3
+//Make sure allocated objects can still be accessed correctly!!
 
 void test_workload3(void) {
     void *ptrs[OBJECTS] = {NULL};
@@ -131,7 +132,7 @@ void test_workload3(void) {
 
 
 
-//Test 4: Test the more complex allocation/free pattern from workload 4. This also exercises reuse of freed space.
+//Test 4: Test the more complex allocation/free pattern from workload 4.
  
 void test_workload4(void) {
     void *ptrs[50];
