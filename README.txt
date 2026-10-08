@@ -18,6 +18,22 @@ testmem.c (used to test memgrind)
 - stress correcting
 - checks if it frees workloads
 
+MORE SPECIFIC TESTS FOR FREE:
+
+testinvalidfree.c 
+-calls free with a pointer  that was not returned by malloc
+-should return with an error!
+
+testleak.c
+-tests the leak separately, though I believe it is tested in testfree.c 
+
+testmiddlefree.c
+-calls free with a pointer into the middle of an allocation
+-should return an error
+
+testdoublefree.c
+-tests free with a pointer that has already been freed.
+
 
 design notes: 
 
