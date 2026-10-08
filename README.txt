@@ -1,15 +1,23 @@
 # MyLittleMalloc
 AUTHORS: Anagha Ajesh(aa3611) and Manusri Yarramsetty(my607)
 
-test plans: 
+test plans and programs: 
 
+test.c (used to test mymalloc())
+- Basic malloc functionality
+- Usable memory
 
-test programs:
+testfree.c (used to test myfree())
+- Basic free functionality
+- tests deallocation and reuse of freed chunks
 
-- test.c (used to test mymalloc())
-- testfree.c (used to test myfree())
-- testcoa.c (used to test the helper function in mymalloc.c for coalescing)
-- testmem.c (used to test memgrind)
+testcoa.c (used to test the helper function in mymalloc.c for coalescing)
+- tests if adjacent chunks are coalesced
+
+testmem.c (used to test memgrind)
+- stress correcting
+- checks if it frees workloads
+
 
 design notes: 
 
