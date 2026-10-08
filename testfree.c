@@ -16,6 +16,19 @@ int main() {
 
     free(a);
 
+    int *b = malloc(sizeof(int));
+
+    if (b == NULL) {
+        printf("FAIL: memory was not reusable\n");
+        return 1;
+    }
+
+    *b = 100;
+
+    printf("After free, new allocation worked: %d\n", *b);
+
+    free(b);
+
     printf("Free worked!\n");
 
     return 0;
