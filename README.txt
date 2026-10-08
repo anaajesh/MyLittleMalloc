@@ -1,7 +1,7 @@
 # MyLittleMalloc
 AUTHORS: Anagha Ajesh(aa3611) and Manusri Yarramsetty(my607)
 
-test plans and programs: 
+TEST PLANS AND PROGRAMS:
 
 test.c (used to test mymalloc())
 - Basic malloc functionality
@@ -35,7 +35,7 @@ testdoublefree.c
 -tests free with a pointer that has already been freed.
 
 
-design notes: 
+DESIGN NOTES: 
 
 - the heap is represented by a 4096-byte static union in mymalloc.c. 
 - each chunk contains a header storing the total chunk size and whether the chunk is allocated
