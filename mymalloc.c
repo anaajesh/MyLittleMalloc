@@ -124,14 +124,13 @@ void *mymalloc (size_t size, char *file, int line){
 
 void myfree(void *ptr, char *file, int line){
 
+    if(!initialized){
+        initialize_heap();
+    }
+
     //js checkin if pointer is null or not initialized for base checks
     if(ptr == NULL){
         return;
-    }
-
-    if(!initialized){
-        fprintf(stderr, "free: Innapropriate pointer (%s:%d)\n", file, line);
-        exit(2);
     }
 
     char *p = heap.bytes;

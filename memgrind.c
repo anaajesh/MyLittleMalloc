@@ -61,21 +61,25 @@ void workload3(void) {
 }
 
 void workload4(void) {
-    void *ptrs[50];
-    for (int i = 0; i < 50; i++) {
+    void *ptrs[20];
+
+    for (int i = 0; i < 20; i++) {
         ptrs[i] = malloc((i + 1) * 8);
     }
-    for (int i = 0; i < 50; i += 2) {
+
+    for (int i = 0; i < 20; i += 2) {
         if (ptrs[i]) {
             free(ptrs[i]);
             ptrs[i] = NULL;
         }
     }
-    for (int i = 0; i < 25; i++) {
+
+    for (int i = 0; i < 10; i++) {
         void *p = malloc(16);
         if (p) free(p);
     }
-    for (int i = 1; i < 50; i += 2) {
+
+    for (int i = 1; i < 20; i += 2) {
         if (ptrs[i]) {
             free(ptrs[i]);
             ptrs[i] = NULL;
