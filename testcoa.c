@@ -18,26 +18,19 @@ int main(void) {
 
     printf("Initial allocations: PASS\n");
 
-    // Free all three chunks
     free(a);
     free(b);
     free(c);
 
-    /*
-     * If coalescing works, the three adjacent free chunks
-     * should have been combined into one large free chunk.
-     *
-     * We should therefore be able to allocate a chunk
-     * that is larger than any one of the original chunks.
-     */
+    //testing big chunk after combinin other chunks -> shld work now if coalesced properly
     void *big = malloc(300);
 
     if (big == NULL) {
-        printf("FAIL: Coalescing is not working correctly.\n");
+        printf("FAIL: Coalescing is not working\n");
         return 1;
     }
 
-    printf("Triple coalescing: PASS\n");
+    printf("Triple coalescing passed\n");
 
     free(big);
 

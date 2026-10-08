@@ -25,7 +25,7 @@ static int initialized = 0; // 0 if the heap isnt set up and 1 otherwise; idk if
 //but we cant use the test file yet bc i didnt call coalesce in free() since mine is unfinished
 
 static void coalesce(void) {
-    
+
     char *ptr = heap.bytes;
 
     while (ptr < heap.bytes + MEMLENGTH) {
@@ -70,7 +70,7 @@ static void leak_checker(void){
 
     if(leaked_objects > 0){
         //printf("LEAKED %d OBJECTS FOR A TOTAL OF %d BYTES\n", leaked_objects, leaked_bytes);
-        printf("mymalloc: %d bytes leaked in %d objects.\n", leaked_objects, leaked_bytes);
+        printf("mymalloc: %d bytes leaked in %d objects.\n", leaked_bytes, leaked_objects);
 
     }
 }
@@ -161,34 +161,6 @@ void myfree(void *ptr, char *file, int line){
     current->allocated = 0;
 
     coalesce();
+    return;
 
-    /*chunk after
-    char *next = p + current->size;
-
-    if(next < heap.bytes + MEMLENGTH){
-
-        ChunkHeader *next_chunk = (ChunkHeader *)next;
-
-        if(next_chunk->allocated == 0){
-            current->size = current->size + next_chunk->size;
-        }
-
-    }
-
-    //chunk before
-    char *before = heap.bytes;
-    ChunkHeader *before_chunk = NULL;
-
-    while(before < p){
-        before_chunk = (ChunkHeader *)before;
-        before = before + before_chunk->size;
-    }
-
-
-    // combine with prev chunk if its free
-    if(before_chunk != NULL && before_chunk->allocated == 0){
-
-        before_chunk->size = before_chunk->size + current->size;
-    }
-    */
 }
